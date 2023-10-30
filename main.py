@@ -26,3 +26,32 @@ with open('books-en.csv', mode='r') as file:
     for i in range(1, 21):
         number = randint(1, 9400)
         text.write(f"{i} {books[number]['Book-Author']} - {books[number]['Book-Title']} \n")
+
+
+############ допзадание ##########
+
+publisher = []
+with open('books-en.csv', mode='r') as file:
+    books = csv.DictReader(file, delimiter=';')
+    for row in books:
+        if row["Publisher"] not in publisher:
+            publisher.append(row["Publisher"])
+if input("You want to see the list of publishers? (y/n)") == "y":
+    print("\n#################\n")
+    print(f"the list of publishers: ",end="")
+    print(*publisher)
+
+print("\n#################\n")
+best = dict()
+nums = []
+with open('books-en.csv', mode='r') as file:
+    books = csv.DictReader(file, delimiter=';')
+    for row in books:
+        num, name = row["Downloads"], row["Book-Title"]
+        nums.append(int(num))
+        if int(num) not in best:
+            best[int(num)] = []
+        best[int(num)].append(name)
+    print("The most popular books:")
+    for i, el in enumerate(sorted(best[25])[:20]):
+        print(i+1, el)
